@@ -1,4 +1,4 @@
-= Lab xxxx
+= Lab Stored procedures
 :stylesheet: boot-darkly.css
 :linkcss: boot-darkly.css
 :image-url-ironhack: https://user-images.githubusercontent.com/23629340/40541063-a07a0a8a-601a-11e8-91b5-2f13e4e6b441.png
@@ -6,7 +6,7 @@
 :description:
 //:fn-xxx: Add the explanation foot note here bla bla
 :toc:
-:toc-title: Lab description: In this lab, you will....
+:toc-title: In this lab, we will continue working on the Sakila database of movie rentals.
 :toc-placement!:
 :toclevels: 5
 ifdef::env-github[]
@@ -62,6 +62,84 @@ toc::[]
 
 
 = Instructions:
+
+== Write queries, stored procedures to answer the following questions:
+
+* In the previous lab we wrote a query to find first name, last name, and emails of all the customers who rented Action movies. Convert the query into a simple stored procedure. Use the following query:
+
+```sql
+  select first_name, last_name, email
+  from customer
+  join rental on customer.customer_id = rental.customer_id
+  join inventory on rental.inventory_id = inventory.inventory_id
+  join film on film.film_id = inventory.film_id
+  join film_category on film_category.film_id = film.film_id
+  join category on category.category_id = film_category.category_id
+  where category.name = "Action"
+  group by first_name, last_name, email;
+```
+
+`*_Answer:_*`
+  
+```sql
+drop procedure if exists get_customers;
+delimiter //
+create procedure get_customers()
+begin
+	select first_name, last_name, email
+	  from customer
+	  join rental on customer.customer_id = rental.customer_id
+	  join inventory on rental.inventory_id = inventory.inventory_id
+	  join film on film.film_id = inventory.film_id
+	  join film_category on film_category.film_id = film.film_id
+	  join category on category.category_id = film_category.category_id
+	  where category.name = "Action"
+	  group by first_name, last_name, email
+      order by customer.customer_id;
+end //
+delimiter ;
+
+call get_customers;
+```
+
+
+image::https://user-images.githubusercontent.com/63274055/159296589-f5c1dbf3-b4e5-4e6f-8a0a-13823f0d0f3f.png[width=500]
+  
+  
+====
+''''
+====
+
+* Now keep working on the previous stored procedure to make it more dynamic. Update the stored procedure in a such manner that it can take a string argument for the category name and return the results for all customers that rented movie of that category/genre. For eg., it could be action, animation, children, classics, etc.
+
+
+
+`*_Answer:_*`
+
+```sql
+drop procedure if exists get_customers;
+
+delimiter //
+create procedure get_customers(in category varchar(10))
+begin
+	select first_name, last_name, email
+	  from customer
+	  join rental on customer.customer_id = rental.customer_id
+	  join inventory on rental.inventory_id = inventory.inventory_id
+	  join film on film.film_id = inventory.film_id
+	  join film_category on film_category.film_id = film.film_id
+	  join category on category.category_id = film_category.category_id
+	  where category.name = category
+	  group by first_name, last_name, email
+      order by customer.customer_id;
+end //
+delimiter ;
+
+call get_customers("animation");
+```
+
+image::https://user-images.githubusercontent.com/63274055/159298159-294afaa3-5d68-4d77-89d2-7343e343e025.png[width=500]
+
 
 
 ====
