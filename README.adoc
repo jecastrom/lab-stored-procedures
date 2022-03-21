@@ -212,7 +212,7 @@ delimiter ;
 
 call get_films_in_category(50);
 ```
-image::https://user-images.githubusercontent.com/63274055/159301652-fcd9499b-2a6e-405e-a43c-2df8d815d11e.png[width=400]
+image::https://user-images.githubusercontent.com/63274055/159301652-fcd9499b-2a6e-405e-a43c-2df8d815d11e.png[width=300]
 
 
 
