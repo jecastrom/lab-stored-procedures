@@ -103,7 +103,7 @@ call get_customers;
 ```
 
 
-image::https://user-images.githubusercontent.com/63274055/159296589-f5c1dbf3-b4e5-4e6f-8a0a-13823f0d0f3f.png[width=500]
+image::https://user-images.githubusercontent.com/63274055/159296589-f5c1dbf3-b4e5-4e6f-8a0a-13823f0d0f3f.png[width=300]
   
   
 ====
@@ -138,7 +138,7 @@ delimiter ;
 call get_customers("animation");
 ```
 
-image::https://user-images.githubusercontent.com/63274055/159298159-294afaa3-5d68-4d77-89d2-7343e343e025.png[width=500]
+image::https://user-images.githubusercontent.com/63274055/159298159-294afaa3-5d68-4d77-89d2-7343e343e025.png[width=300]
 
 
 
