@@ -146,6 +146,76 @@ image::https://user-images.githubusercontent.com/63274055/159298159-294afaa3-5d6
 ''''
 ====
 
+* Write a query to check the number of movies released in each movie category. Convert the query in to a stored procedure to filter only those categories that have movies released greater than a certain number. Pass that number as an argument in the stored procedure.
+
+
+. Write a query to check the number of movies released in each movie category
+`*_Answer:_*`
+
+```sql
+select name, count(f.film_id) number_of_films
+from film_category f
+inner join category c
+using (category_id)
+group by f.category_id;
+```
+
+image::https://user-images.githubusercontent.com/63274055/159299783-0009a836-5d13-4a1c-a184-344e37ab8213.png[width=800]
+
+====
+''''
+====
+
+. Convert the query in to a stored procedure to filter only those categories that have movies released greater than a certain number
+
+```sql
+drop procedure if exists get_films_in_category;
+delimiter //
+create procedure get_films_in_category()
+begin
+	select name, count(f.film_id) number_of_films
+	from film_category f
+	join category c
+	using (category_id)
+	group by f.category_id
+	having number_of_films > 50;
+end //
+delimiter ;
+
+call get_films_in_category;
+```
+
+====
+''''
+====
+
+image::https://user-images.githubusercontent.com/63274055/159301652-fcd9499b-2a6e-405e-a43c-2df8d815d11e.png[width=400]
+
+
+. Pass that number as an argument in the stored procedure.
+
+`*_Answer:_*`
+
+```sql
+drop procedure if exists get_films_in_category;
+delimiter //
+create procedure get_films_in_category(in low_limit smallint)
+begin
+	select name, count(f.film_id) number_of_films
+	from film_category f
+	join category c
+	using (category_id)
+	group by f.category_id
+	having number_of_films > low_limit;
+end //
+delimiter ;
+
+call get_films_in_category(50);
+```
+image::https://user-images.githubusercontent.com/63274055/159301652-fcd9499b-2a6e-405e-a43c-2df8d815d11e.png[width=400]
+
+
+
 
 
 ====
@@ -155,9 +225,9 @@ image::https://user-images.githubusercontent.com/63274055/159298159-294afaa3-5d6
 
 
 
-xref:Lab-xxxx[Top Section]
+xref:Lab-Stored-procedures[Top Section]
 
-xref:Last-section[Bottom section]
+
 
 //bla bla blafootnote:[{fn-xxx}]
 
